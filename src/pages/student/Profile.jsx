@@ -57,7 +57,7 @@ const Profile = () => {
   useEffect(() => {
     if (isSuccess) {
       refetch();
-      toast.success(data.message || "Profile updated.");
+      toast.success(data?.message || "Profile updated.");
     }
     if (isError) {
       toast.error(error.message || "Failed to update profile");
@@ -66,10 +66,10 @@ const Profile = () => {
 
   if (isLoading) return <h1>Profile Loading...</h1>;
 
-  const user = data && data.user;
+  const user = data && data?.user;
 
   console.log(user);
-  
+
 
   return (
     <div className="max-w-4xl mx-auto px-4 my-10">
@@ -89,7 +89,7 @@ const Profile = () => {
             <h1 className="font-semibold text-gray-900 dark:text-gray-100 ">
               Name:
               <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                {user.name}
+                {user?.name}
               </span>
             </h1>
           </div>
@@ -97,7 +97,7 @@ const Profile = () => {
             <h1 className="font-semibold text-gray-900 dark:text-gray-100 ">
               Email:
               <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                {user.email}
+                {user?.email}
               </span>
             </h1>
           </div>
@@ -105,7 +105,7 @@ const Profile = () => {
             <h1 className="font-semibold text-gray-900 dark:text-gray-100 ">
               Role:
               <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                {user.role.toUpperCase()}
+                {user?.role.toUpperCase()}
               </span>
             </h1>
           </div>
