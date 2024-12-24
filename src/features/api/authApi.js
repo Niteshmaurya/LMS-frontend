@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { userLoggedIn, userLoggedOut } from "../authSlice";
 
 const USER_API = "https://lms-backend-sy36.onrender.com/api/v1/user/"
+const token = localStorage.getItem("token");
 
 export const authApi = createApi({
     reducerPath: "authApi",
@@ -27,7 +28,7 @@ export const authApi = createApi({
                 try {
                     const result = await queryFulfilled;
                     dispatch(userLoggedIn({ user: result.data.user }));
-                    console.log(result.data.user);
+
 
                 } catch (error) {
                     console.log(error);
@@ -48,9 +49,14 @@ export const authApi = createApi({
             }
         }),
         loadUser: builder.query({
+
             query: () => ({
                 url: "profile",
-                method: "GET"
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
             }),
             async onQueryStarted(_, { queryFulfilled, dispatch }) {
                 try {
@@ -62,13 +68,19 @@ export const authApi = createApi({
             }
         }),
         updateUser: builder.mutation({
-            query: (formData) => ({
-                url: "profile/update",
-                method: "PUT",
-                body: formData,
-                credentials: "include"
-            })
-        })
+            query: (formData) => {
+                return {
+                    url: "profile/update",
+                    method: "PUT",
+                    body: formData,
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                };
+            },
+        }),
+
     })
 });
 export const {

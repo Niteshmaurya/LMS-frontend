@@ -60,21 +60,26 @@ const Login = () => {
   const handleRegistration = async (type) => {
     const inputData = type === "signup" ? signupInput : loginInput;
     const action = type === "signup" ? registerUser : loginUser;
-    await action(inputData);
+    const temp = await action(inputData);
+
+    if (temp.data?.token) {
+      localStorage.setItem("token", temp.data.token);
+      console.log("Token stored successfully:", temp.data.token);
+    }
   };
 
   useEffect(() => {
-    if(registerIsSuccess && registerData){
+    if (registerIsSuccess && registerData) {
       toast.success(registerData.message || "Signup successful.")
     }
-    if(registerError){
+    if (registerError) {
       toast.error(registerError.data.message || "Signup Failed");
     }
-    if(loginIsSuccess && loginData){
+    if (loginIsSuccess && loginData) {
       toast.success(loginData.message || "Login successful.");
       navigate("/");
     }
-    if(loginError){ 
+    if (loginError) {
       toast.error(loginError.data.message || "login Failed");
     }
   }, [

@@ -47,7 +47,7 @@ const Profile = () => {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("profilePhoto", profilePhoto);
-    await updateUser(formData);
+    await updateUser(formData, config);
   };
 
   useEffect(() => {
