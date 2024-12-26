@@ -2,6 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const COURSE_PURCHASE_API = "https://lms-backend-sy36.onrender.com/api/v1/purchase";
 
+const token = localStorage.getItem("token");
+
 export const purchaseApi = createApi({
   reducerPath: "purchaseApi",
   baseQuery: fetchBaseQuery({
@@ -26,6 +28,10 @@ export const purchaseApi = createApi({
       query: () => ({
         url: `/`,
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }),
     }),
   }),
