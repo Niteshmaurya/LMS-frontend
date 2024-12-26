@@ -16,12 +16,20 @@ export const purchaseApi = createApi({
         url: "/checkout/create-checkout-session",
         method: "POST",
         body: { courseId },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }),
     }),
     getCourseDetailWithStatus: builder.query({
       query: (courseId) => ({
         url: `/course/${courseId}/detail-with-status`,
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }),
     }),
     getPurchasedCourses: builder.query({

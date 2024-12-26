@@ -2,6 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const COURSE_PROGRESS_API = "https://lms-backend-sy36.onrender.com/api/v1/progress";
 
+const token = localStorage.getItem("token");
+
 export const courseProgressApi = createApi({
   reducerPath: "courseProgressApi",
   baseQuery: fetchBaseQuery({
@@ -13,25 +15,41 @@ export const courseProgressApi = createApi({
       query: (courseId) => ({
         url: `/${courseId}`,
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }),
     }),
     updateLectureProgress: builder.mutation({
       query: ({ courseId, lectureId }) => ({
         url: `/${courseId}/lecture/${lectureId}/view`,
-        method: "POST"
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }),
     }),
 
     completeCourse: builder.mutation({
       query: (courseId) => ({
         url: `/${courseId}/complete`,
-        method: "POST"
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       })
     }),
     inCompleteCourse: builder.mutation({
       query: (courseId) => ({
         url: `/${courseId}/incomplete`,
-        method: "POST"
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       })
     }),
 

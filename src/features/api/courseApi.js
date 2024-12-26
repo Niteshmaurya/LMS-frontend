@@ -2,6 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const COURSE_API = "https://lms-backend-sy36.onrender.com/api/v1/course";
 
+const token = localStorage.getItem("token");
+
 export const courseApi = createApi({
   reducerPath: "courseApi",
   tagTypes: ["Refetch_Creator_Course", "Refetch_Lecture"],
@@ -15,6 +17,10 @@ export const courseApi = createApi({
         url: "",
         method: "POST",
         body: { courseTitle, category },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }),
       invalidatesTags: ["Refetch_Creator_Course"],
     }),
@@ -37,6 +43,10 @@ export const courseApi = createApi({
         return {
           url: queryString,
           method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
       }
     }),
@@ -44,12 +54,20 @@ export const courseApi = createApi({
       query: () => ({
         url: "/published-courses",
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }),
     }),
     getCreatorCourse: builder.query({
       query: () => ({
         url: "",
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }),
       providesTags: ["Refetch_Creator_Course"],
     }),
@@ -58,6 +76,10 @@ export const courseApi = createApi({
         url: `/${courseId}`,
         method: "PUT",
         body: formData,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }),
       invalidatesTags: ["Refetch_Creator_Course"],
     }),
@@ -65,6 +87,10 @@ export const courseApi = createApi({
       query: (courseId) => ({
         url: `/${courseId}`,
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }),
     }),
     createLecture: builder.mutation({
@@ -72,12 +98,20 @@ export const courseApi = createApi({
         url: `/${courseId}/lecture`,
         method: "POST",
         body: { lectureTitle },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }),
     }),
     getCourseLecture: builder.query({
       query: (courseId) => ({
         url: `/${courseId}/lecture`,
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }),
       providesTags: ["Refetch_Lecture"],
     }),
@@ -92,18 +126,30 @@ export const courseApi = createApi({
         url: `/${courseId}/lecture/${lectureId}`,
         method: "POST",
         body: { lectureTitle, videoInfo, isPreviewFree },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }),
     }),
     removeLecture: builder.mutation({
       query: (lectureId) => ({
         url: `/lecture/${lectureId}`,
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }),
       invalidatesTags: ["Refetch_Lecture"],
     }),
     getLectureById: builder.query({
       query: (lectureId) => ({
         url: `/lecture/${lectureId}`,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         method: "GET",
       }),
     }),
@@ -111,6 +157,10 @@ export const courseApi = createApi({
       query: ({ courseId, query }) => ({
         url: `/${courseId}?publish=${query}`,
         method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }),
     }),
   }),
